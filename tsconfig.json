@@ -16,6 +16,7 @@
       "styles/*": ["styles/*"], 
       "components/*": ["components/*"],
       "views/*": ["views/*"],
+      "redux/*": ["redux/*"],
     }
   },
   "include": ["src/**/*"],

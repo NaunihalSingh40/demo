@@ -1,36 +1,83 @@
 import styled from "styled-components";
-import { lightTheme, darkTheme } from "theme/color";
+import { colors } from "./data";
 
-export const Wrapper = styled.div`
-  transition: background-color 0.3s, color 0.3s;
-  background-color: ${darkTheme.background};
-  height: calc(100vh - 60px); // Subtracting NavBar height from the full height
-  width: 100%;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box; // Ensures padding doesn't overflow the container
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 60px; // To push content below the fixed navbar
+export const NavbarContainer = styled.div`
+  background-color: ${colors.background};
+  padding: 10px 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 `;
 
-export const NavWrapper = styled.nav`
-  background-color: ${darkTheme.background};
-  height: 60px; // Fixed height for the navbar
+export const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  color: ${darkTheme.textPrimary};
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10; // Ensures the navbar stays on top of the content
+  max-width: 1200px;
+  margin: 0 auto;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
-export const NavList = styled.ul``;
+export const NavBrand = styled.div`
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: ${colors.textPrimary};
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
 
-export const NavItem = styled.li``;
+  &:hover {
+    color: ${colors.textHover};
+  }
+`;
+
+export const NavList = styled.ul`
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+  }
+`;
+
+export const NavItem = styled.li`
+  margin: 0 15px;
+  @media (max-width: 768px) {
+    margin: 10px 0;
+  }
+`;
+
+export const NavLink = styled.a`
+  text-decoration: none;
+  color: ${colors.textPrimary};
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: ${colors.textHover};
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
+
+export const NavToggle = styled.div`
+  display: none;
+  font-size: 1.5rem;
+  color: ${colors.textPrimary};
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
