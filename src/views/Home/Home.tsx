@@ -1,31 +1,68 @@
-import React, { useEffect } from "react";
-import { Wrapper } from "styles/components/Home/Home";
-import { useSelector } from "react-redux";
+import { fetchData } from "features/Api";
+import { useEffect, useState } from "react";
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableData,
+} from "../../styles/components/Home/Home";
 
-// Define the shape of the login credentials object
-interface LoginCredentials {
-  Username: string;
-  Password: string;
+export interface Data {
+  id: number;
+  name: string;
+  email: string;
+  address: {
+    city: string;
+    zipcode: string;
+  };
 }
 
 export const Home = () => {
-  // Use `useSelector` to access the theme from the Redux store
-  const theme = useSelector((state: { theme: { value: boolean } }) => state.theme.value);
+  const [data, setData] = useState<Data[]>([]); // State to store the fetched data
 
-  // Retrieve and parse login credentials from localStorage
-  const loginCredentials: LoginCredentials | null = JSON.parse(window.localStorage.getItem("loginCredentials:") || "null");
-  
   useEffect(() => {
     document.title = "Home Page";
+
+    // Fetch data and update state
+    const fetchDataAsync = async () => {
+      try {
+        const response = await fetchData("https://jsonplaceholder.typicode.com/users");
+        if (response) {
+          setData(response.data); // Assuming `fetchData` returns Axios response
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchDataAsync();
   }, []);
 
   return (
     <>
-      <Wrapper isDarkMode={theme}>
-        <h1>
-          Hello {loginCredentials?.Username}, your password breached: {loginCredentials?.Password}
-        </h1>
-      </Wrapper>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeader>ID</TableHeader>
+            <TableHeader>Name</TableHeader>
+            <TableHeader>Email</TableHeader>
+            <TableHeader>City</TableHeader>
+            <TableHeader>Zipcode</TableHeader>
+          </TableRow>
+        </TableHead>
+        <tbody>
+          {data.map((item) => (
+            <TableRow key={item.id}>
+              <TableData>{item.id}</TableData>
+              <TableData>{item.name}</TableData>
+              <TableData>{item.email}</TableData>
+              <TableData>{item.address.city}</TableData>
+              <TableData>{item.address.zipcode}</TableData>
+            </TableRow>
+          ))}
+        </tbody>
+      </Table>
     </>
   );
 };

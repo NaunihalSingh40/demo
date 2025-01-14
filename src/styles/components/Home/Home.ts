@@ -14,3 +14,33 @@ export const Wrapper = styled.div<WrapperProps>`
   color: ${(props) =>
     props.isDarkMode ? darkTheme.textPrimary : lightTheme.textPrimary};
 `;
+
+
+export const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1rem;
+  text-align: left;
+`;
+
+export const TableHead = styled.thead`
+  background-color: #f4f4f4;
+`;
+
+export const TableRow = styled.tr`
+  &:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+`;
+
+export const TableHeader = styled.th`
+  border: 1px solid #ddd;
+  padding: 8px;
+  font-weight: bold;
+`;
+
+export const TableData = styled.td`
+  border: 1px solid #ddd;
+  padding: 8px;
+`;

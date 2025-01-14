@@ -18,9 +18,10 @@ import { Wrapper } from "../styles/components/Login/Login";
 import { darkTheme, lightTheme } from "../theme/color";
 import { useNavigate } from "react-router-dom";
 import { Theme, useTheme } from "@mui/material/styles";
+import { postData } from "features/Api";
 
 // Define interface for form data
-interface ILoginForm {
+export interface ILoginForm {
   Username: string;
   Password: string;
   Role: string;
@@ -56,32 +57,46 @@ function Login() {
     document.title = "Login Page";
   }, []);
 
-  const onSubmit: SubmitHandler<ILoginForm> = (data) => {
+  const onSubmit: SubmitHandler<ILoginForm> = async (data) => {
     const key = "loginCredentials:";
 
-    // Store data as a string in localStorage
-    localStorage.setItem(key, JSON.stringify(data));
+    try {
+      // Pass the correct URL dynamically
+      const response = await postData(
+        data,
+        "https://8631-112-196-2-205.ngrok-free.app/api/auth/login"
+      );
 
-    // Retrieve the data
-    const token = localStorage.getItem(key);
-    if (token) {
-      console.log("Token saved in localStorage:", token);
-    } else {
-      console.log("No token found in localStorage");
-    }
-    reset(); // Resets the form after submission
+      console.log(response);
+      
+      // Store data as a string in localStorage if needed
+      localStorage.setItem(key, JSON.stringify(data));
 
-    // Redirect after form submission
-    if(data.Role === "Admin"){
-      navigate("/Admin")
-    }else if(data.Role === "Product Manager"){
-      navigate("/ProductManager")
-    }else if(data.Role === "Financer"){
-      navigate("/Financer")
-    }else if(data.Role === "HR"){
-      navigate("/HR")
-    }else{
-      console.log("not got the role!!");
+      // Retrieve the data
+      const token = localStorage.getItem(key);
+      if (token) {
+        console.log("Token saved in localStorage:", token);
+      } else {
+        console.log("No token found in localStorage");
+      }
+
+      reset(); // Reset form after submission
+
+      // Redirect based on Role
+      if (data.Role === "Admin") {
+        navigate("/Admin");
+      } else if (data.Role === "Product Manager") {
+        navigate("/ProductManager");
+      } else if (data.Role === "Financer") {
+        navigate("/Financer");
+      } else if (data.Role === "HR") {
+        navigate("/HR");
+      } else {
+        console.log("Role not found!");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      // Handle the error if needed (e.g., show an error message to the user)
     }
   };
 
@@ -234,7 +249,6 @@ function Login() {
               </FormControl>
             )}
           />
-
 
           <Controller
             name="Role"
