@@ -1,8 +1,17 @@
 import styled from "styled-components";
-import { colors } from "./data";
 
-export const NavbarContainer = styled.div`
-  background-color: ${colors.background};
+import { darkTheme, lightTheme } from "theme/color";
+
+interface WrapperProps {
+  isDarkMode: boolean;
+}
+
+
+export const NavbarContainer = styled.div<WrapperProps>`
+  background: ${(props) =>
+    props.isDarkMode ? darkTheme.background : lightTheme.background};
+  color: ${(props) =>
+    props.isDarkMode ? darkTheme.textPrimary : lightTheme.textPrimary};
   padding: 10px 20px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   position: sticky;
@@ -22,16 +31,18 @@ export const Nav = styled.nav`
   }
 `;
 
-export const NavBrand = styled.div`
+export const NavBrand = styled.div<WrapperProps>`
   font-size: 1.8rem;
   font-weight: bold;
-  color: ${colors.textPrimary};
+  color: ${(props) =>
+    props.isDarkMode ? darkTheme.textPrimary : lightTheme.textPrimary};
   text-transform: uppercase;
   letter-spacing: 2px;
   cursor: pointer;
 
   &:hover {
-    color: ${colors.textHover};
+  color: ${(props) =>
+    props.isDarkMode ? darkTheme.textSecondary : lightTheme.textSecondary};
   }
 `;
 
@@ -54,16 +65,18 @@ export const NavItem = styled.li`
   }
 `;
 
-export const NavLink = styled.a`
+export const NavLink = styled.a<WrapperProps>`
   text-decoration: none;
-  color: ${colors.textPrimary};
+  color: ${(props) =>
+    props.isDarkMode ? darkTheme.textPrimary : lightTheme.textPrimary};
   font-size: 1.2rem;
   font-weight: bold;
   text-transform: uppercase;
   transition: all 0.3s ease;
 
   &:hover {
-    color: ${colors.textHover};
+  color: ${(props) =>
+    props.isDarkMode ? darkTheme.textSecondary : lightTheme.textSecondary};
   }
 
   @media (max-width: 768px) {
@@ -71,10 +84,11 @@ export const NavLink = styled.a`
   }
 `;
 
-export const NavToggle = styled.div`
+export const NavToggle = styled.div<WrapperProps>`
   display: none;
   font-size: 1.5rem;
-  color: ${colors.textPrimary};
+  color: ${(props) =>
+    props.isDarkMode ? darkTheme.textPrimary : lightTheme.textPrimary};
   cursor: pointer;
 
   @media (max-width: 768px) {

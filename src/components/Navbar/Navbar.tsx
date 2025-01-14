@@ -13,7 +13,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormGroup, Switch } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleMode } from "../../redux/modeSlice";
-import { RootState } from "../../store"; // Adjusted to match store.ts
 
 interface NavbarProps {}
 
@@ -23,18 +22,17 @@ export const Navbar: React.FC<NavbarProps> = () => {
   const dispatch = useDispatch();
 
   // Accessing the theme state from Redux
-  const theme = useSelector((state: RootState) => state.theme.value);
-  console.log(theme);
+  const theme = useSelector((state: { theme: { value: boolean } }) => state.theme.value);
 
   return (
-    <NavbarContainer>
+    <NavbarContainer isDarkMode={theme}>
       <Nav>
-        <NavBrand>
+        <NavBrand isDarkMode={theme}>
           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
             <img alt="logo" src="/logorm.png" height={70} width={70} />
           </Link>
         </NavBrand>
-        <NavToggle onClick={() => setMenuOpen(!menuOpen)}>&#9776;</NavToggle>
+        <NavToggle isDarkMode={theme} onClick={() => setMenuOpen(!menuOpen)}>&#9776;</NavToggle>
         <NavList
           style={{
             display: menuOpen ? "flex" : undefined, // Use undefined instead of ""
@@ -42,27 +40,27 @@ export const Navbar: React.FC<NavbarProps> = () => {
           }}
         >
           <NavItem>
-            <NavLink as={Link} to="/">
+            <NavLink isDarkMode={theme} as={Link} to="/">
               Home
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink as={Link} to="/About">
+            <NavLink isDarkMode={theme} as={Link} to="/About">
               About
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink as={Link} to="/Form">
+            <NavLink isDarkMode={theme}  as={Link} to="/Form">
               Form
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink as={Link} to="/Login">
+            <NavLink isDarkMode={theme} as={Link} to="/Login">
               Login
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink as={Link} to="/Signup">
+            <NavLink isDarkMode={theme} as={Link} to="/Signup">
               Signup
             </NavLink>
           </NavItem>
@@ -76,7 +74,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
               }
               label="Dark Mode"
               sx={{
-                color: theme ? "white" : "#2C3E50",
+                color: theme ? "#e0e0e0" : "#333333",
                 fontWeight: "bolder",
                 textTransform: "uppercase",
                 fontSize: "1.5rem",
