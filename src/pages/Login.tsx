@@ -18,7 +18,9 @@ import { Wrapper } from "../styles/components/Login/Login";
 import { darkTheme, lightTheme } from "../theme/color";
 import { useNavigate } from "react-router-dom";
 import { Theme, useTheme } from "@mui/material/styles";
-import { postData } from "features/Api";
+// import axios from "axios";
+import usePost from "hooks/usePost";
+import { LOGIN_URL } from "utils/Api";
 
 // Define interface for form data
 export interface ILoginForm {
@@ -29,6 +31,8 @@ export interface ILoginForm {
 
 const names = ["Admin", "Product Manager", "HR", "Financer"];
 
+
+
 function getStyles(name: string, personName: readonly string[], theme: Theme) {
   return {
     fontWeight: personName.includes(name)
@@ -38,6 +42,9 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
 }
 
 function Login() {
+
+  const {mutateAsync} = usePost();
+
   const themme = useTheme();
   const [personName] = React.useState<string[]>([]);
 
@@ -59,15 +66,43 @@ function Login() {
 
   const onSubmit: SubmitHandler<ILoginForm> = async (data) => {
     const key = "loginCredentials:";
-
+    const finalPayload = {
+      "email":data.Username,
+      "password":data.Password
+    }
+    console.log(finalPayload);
+    
     try {
       // Pass the correct URL dynamically
-      const response = await postData(
-        data,
-        "https://8631-112-196-2-205.ngrok-free.app/api/auth/login"
-      );
+      // const response = await axios.post(
+      //   "https://8631-112-196-2-205.ngrok-free.app/api/auth/login",
+      //   payload,
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/json"
+      //     },       
+      //   },   
+      // );
 
+      const response = await mutateAsync({
+        url: LOGIN_URL,
+        payload: finalPayload,
+      })
       console.log(response);
+
+      if(response){
+        if (data.Role === "Admin") {
+          navigate("/Admin");
+        } else if (data.Role === "Product Manager") {
+          navigate("/ProductManager");
+        } else if (data.Role === "Financer") {
+          navigate("/Financer");
+        } else if (data.Role === "HR") {
+          navigate("/HR");
+        } else {
+          console.log("Role not found!");
+        }
+      }
       
       // Store data as a string in localStorage if needed
       localStorage.setItem(key, JSON.stringify(data));
@@ -83,17 +118,7 @@ function Login() {
       reset(); // Reset form after submission
 
       // Redirect based on Role
-      if (data.Role === "Admin") {
-        navigate("/Admin");
-      } else if (data.Role === "Product Manager") {
-        navigate("/ProductManager");
-      } else if (data.Role === "Financer") {
-        navigate("/Financer");
-      } else if (data.Role === "HR") {
-        navigate("/HR");
-      } else {
-        console.log("Role not found!");
-      }
+      
     } catch (error) {
       console.error("Error during login:", error);
       // Handle the error if needed (e.g., show an error message to the user)

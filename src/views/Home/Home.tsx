@@ -1,5 +1,4 @@
-import { fetchData } from "features/Api";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import {
   Table,
   TableHead,
@@ -18,51 +17,51 @@ export interface Data {
   };
 }
 
+// Fetch function
+const fetchData = async (): Promise<Data[]> => {
+  const response = await fetch("https://jsonplaceholder.typicode.com/users");
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  return response.json(); 
+};
+
 export const Home = () => {
-  const [data, setData] = useState<Data[]>([]); // State to store the fetched data
+  const { data, isLoading, error } = useQuery<Data[], Error>({
+    queryKey: ["users"], 
+    queryFn: fetchData,  
+  });
 
-  useEffect(() => {
-    document.title = "Home Page";
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-    // Fetch data and update state
-    const fetchDataAsync = async () => {
-      try {
-        const response = await fetchData("https://jsonplaceholder.typicode.com/users");
-        if (response) {
-          setData(response.data); // Assuming `fetchData` returns Axios response
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchDataAsync();
-  }, []);
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
-    <>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableHeader>ID</TableHeader>
-            <TableHeader>Name</TableHeader>
-            <TableHeader>Email</TableHeader>
-            <TableHeader>City</TableHeader>
-            <TableHeader>Zipcode</TableHeader>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableHeader>ID</TableHeader>
+          <TableHeader>Name</TableHeader>
+          <TableHeader>Email</TableHeader>
+          <TableHeader>City</TableHeader>
+          <TableHeader>Zipcode</TableHeader>
+        </TableRow>
+      </TableHead>
+      <tbody>
+        {data?.map((item) => (
+          <TableRow key={item.id}>
+            <TableData>{item.id}</TableData>
+            <TableData>{item.name}</TableData>
+            <TableData>{item.email}</TableData>
+            <TableData>{item.address.city}</TableData>
+            <TableData>{item.address.zipcode}</TableData>
           </TableRow>
-        </TableHead>
-        <tbody>
-          {data.map((item) => (
-            <TableRow key={item.id}>
-              <TableData>{item.id}</TableData>
-              <TableData>{item.name}</TableData>
-              <TableData>{item.email}</TableData>
-              <TableData>{item.address.city}</TableData>
-              <TableData>{item.address.zipcode}</TableData>
-            </TableRow>
-          ))}
-        </tbody>
-      </Table>
-    </>
+        ))}
+      </tbody>
+    </Table>
   );
 };

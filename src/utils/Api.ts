@@ -1,0 +1,1 @@
+export const LOGIN_URL = "https://8631-112-196-2-205.ngrok-free.app/api/auth/login";

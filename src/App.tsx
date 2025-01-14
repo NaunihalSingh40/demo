@@ -10,24 +10,22 @@ import { Financer } from "views/Financer/Financer";
 import { ProductManager } from "views/ProductManager/ProductManager";
 import { Admin } from "views/Admin/Admin";
 
-
 function App() {
-
   return (
     <BrowserRouter>
-    <>
-    <Navbar/>
-    <Routes>
-      <Route path="/About" element={<About/>}/>
-      <Route path="/Form" element={<Form/>}/>
-      <Route path="/Login" element={<Login/>}/>
-      <Route path="/Admin" element={<Admin/>}/>
-      <Route path="/ProductManager" element={<ProductManager/>}/>
-      <Route path="/Financer" element={<Financer/>}/>
-      <Route path="/HR" element={<HR/>}/>
-      <Route path="/" element={<Home/>}/>
-    </Routes>
-    </>
+      <>
+        <Navbar />
+        <Routes>
+          <Route path="/About" element={<About />} />
+          <Route path="/Form" element={<Form />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Admin" element={<Admin />} />
+          <Route path="/ProductManager" element={<ProductManager />} />
+          <Route path="/Financer" element={<Financer />} />
+          <Route path="/HR" element={<HR />} />
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </>
     </BrowserRouter>
   );
 }
