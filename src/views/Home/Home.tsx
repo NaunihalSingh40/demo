@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "react-query";
 import {
   Table,
   TableHead,
@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableData,
 } from "../../styles/components/Home/Home";
+import { ProjectTable } from "views/Project";
 
 export interface Data {
   id: number;
@@ -41,27 +42,27 @@ export const Home = () => {
   }
 
   return (
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableHeader>ID</TableHeader>
-          <TableHeader>Name</TableHeader>
-          <TableHeader>Email</TableHeader>
-          <TableHeader>City</TableHeader>
-          <TableHeader>Zipcode</TableHeader>
-        </TableRow>
-      </TableHead>
-      <tbody>
-        {data?.map((item) => (
-          <TableRow key={item.id}>
-            <TableData>{item.id}</TableData>
-            <TableData>{item.name}</TableData>
-            <TableData>{item.email}</TableData>
-            <TableData>{item.address.city}</TableData>
-            <TableData>{item.address.zipcode}</TableData>
-          </TableRow>
-        ))}
-      </tbody>
-    </Table>
+    <><Table>
+          <TableHead>
+              <TableRow>
+                  <TableHeader>ID</TableHeader>
+                  <TableHeader>Name</TableHeader>
+                  <TableHeader>Email</TableHeader>
+                  <TableHeader>City</TableHeader>
+                  <TableHeader>Zipcode</TableHeader>
+              </TableRow>
+          </TableHead>
+          <tbody>
+              {data?.map((item) => (
+                  <TableRow key={item.id}>
+                      <TableData>{item.id}</TableData>
+                      <TableData>{item.name}</TableData>
+                      <TableData>{item.email}</TableData>
+                      <TableData>{item.address.city}</TableData>
+                      <TableData>{item.address.zipcode}</TableData>
+                  </TableRow>
+              ))}
+          </tbody>
+      </Table><ProjectTable /></>
   );
 };

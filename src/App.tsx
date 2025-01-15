@@ -9,7 +9,7 @@ import { HR } from "views/HR/HR";
 import { Financer } from "views/Financer/Financer";
 import { ProductManager } from "views/ProductManager/ProductManager";
 import { Admin } from "views/Admin/Admin";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 
 
