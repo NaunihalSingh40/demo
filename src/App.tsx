@@ -9,9 +9,16 @@ import { HR } from "views/HR/HR";
 import { Financer } from "views/Financer/Financer";
 import { ProductManager } from "views/ProductManager/ProductManager";
 import { Admin } from "views/Admin/Admin";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+
 
 function App() {
+
+const queryClient = new QueryClient();
+
   return (
+    <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <>
         <Navbar />
@@ -27,6 +34,7 @@ function App() {
         </Routes>
       </>
     </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
