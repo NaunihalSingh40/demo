@@ -14,3 +14,6 @@ export type TColumn<T, K extends keyof T> = {
     columns: Array<TColumn<T, K>>
   }
   
+  export const res ={
+    
+  }
