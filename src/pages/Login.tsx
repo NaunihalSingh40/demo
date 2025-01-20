@@ -31,8 +31,6 @@ export interface ILoginForm {
 
 const names = ["Admin", "Product Manager", "HR", "Financer"];
 
-
-
 function getStyles(name: string, personName: readonly string[], theme: Theme) {
   return {
     fontWeight: personName.includes(name)
@@ -42,8 +40,7 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
 }
 
 function Login() {
-
-  const {mutateAsync} = usePost();
+  const { mutateAsync } = usePost();
 
   const themme = useTheme();
   const [personName] = React.useState<string[]>([]);
@@ -67,11 +64,11 @@ function Login() {
   const onSubmit: SubmitHandler<ILoginForm> = async (data) => {
     const key = "loginCredentials:";
     const finalPayload = {
-      "email":data.Username,
-      "password":data.Password
-    }
+      email: data.Username,
+      password: data.Password,
+    };
     console.log(finalPayload);
-    
+
     try {
       // Pass the correct URL dynamically
       // const response = await axios.post(
@@ -80,17 +77,17 @@ function Login() {
       //   {
       //     headers: {
       //       "Content-Type": "application/json"
-      //     },       
-      //   },   
+      //     },
+      //   },
       // );
 
       const response = await mutateAsync({
         url: LOGIN_URL,
         payload: finalPayload,
-      })
+      });
       console.log(response);
 
-      if(response){
+      if (response) {
         if (data.Role === "Admin") {
           navigate("/Admin");
         } else if (data.Role === "Product Manager") {
@@ -103,7 +100,7 @@ function Login() {
           console.log("Role not found!");
         }
       }
-      
+
       // Store data as a string in localStorage if needed
       localStorage.setItem(key, JSON.stringify(data));
 
@@ -118,7 +115,6 @@ function Login() {
       reset(); // Reset form after submission
 
       // Redirect based on Role
-      
     } catch (error) {
       console.error("Error during login:", error);
       // Handle the error if needed (e.g., show an error message to the user)
@@ -138,111 +134,31 @@ function Login() {
   };
 
   return (
-    <Wrapper $isDarkMode={theme}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <h1>Login</h1>
-        <div>
-          <Controller
-            name="Username"
-            control={control}
-            defaultValue=""
-            rules={{ required: "Username is mandatory!!" }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Username"
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                error={!!errors.Username}
-                helperText={errors.Username ? errors.Username.message : ""}
-                sx={{
-                  input: {
-                    color: theme
-                      ? darkTheme.textPrimary
-                      : lightTheme.textPrimary,
-                  },
-                  label: {
-                    color: theme
-                      ? darkTheme.textPrimary
-                      : lightTheme.textPrimary,
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: theme ? darkTheme.border : lightTheme.border,
-                    },
-                    "&:hover fieldset": {
-                      borderColor: theme ? darkTheme.accent : lightTheme.accent,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: theme ? darkTheme.accent : lightTheme.accent,
-                    },
-                  },
-                }}
-              />
-            )}
-          />
-
-          <Controller
-            name="Password"
-            control={control}
-            defaultValue=""
-            rules={{ required: "Password is Required!!" }}
-            render={({ field }) => (
-              <FormControl
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                error={!!errors.Password}
-                sx={{
-                  input: {
-                    color: theme
-                      ? darkTheme.textPrimary
-                      : lightTheme.textPrimary,
-                  },
-                  label: {
-                    color: theme
-                      ? darkTheme.textPrimary
-                      : lightTheme.textPrimary,
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: theme ? darkTheme.border : lightTheme.border,
-                    },
-                    "&:hover fieldset": {
-                      borderColor: theme ? darkTheme.accent : lightTheme.accent,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: theme ? darkTheme.accent : lightTheme.accent,
-                    },
-                  },
-                }}
-              >
-                <InputLabel htmlFor="outlined-adornment-password">
-                  Password
-                </InputLabel>
-                <OutlinedInput
+      <Wrapper $isDarkMode={theme}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h1>Login</h1>
+          <div>
+            <Controller
+              name="Username"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Username is mandatory!!" }}
+              render={({ field }) => (
+                <TextField
                   {...field}
-                  id="outlined-adornment-password"
-                  type={showPassword ? "text" : "password"}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label={
-                          showPassword ? "Hide password" : "Show password"
-                        }
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        onMouseUp={handleMouseUpPassword}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  error={!!errors.Password}
+                  label="Username"
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  error={!!errors.Username}
+                  helperText={errors.Username ? errors.Username.message : ""}
                   sx={{
                     input: {
+                      color: theme
+                        ? darkTheme.textPrimary
+                        : lightTheme.textPrimary,
+                    },
+                    label: {
                       color: theme
                         ? darkTheme.textPrimary
                         : lightTheme.textPrimary,
@@ -266,60 +182,27 @@ function Login() {
                     },
                   }}
                 />
-                {errors.Password && (
-                  <span style={{ color: "red", fontSize: "12px" }}>
-                    {errors.Password.message}
-                  </span>
-                )}
-              </FormControl>
-            )}
-          />
+              )}
+            />
 
-          <Controller
-            name="Role"
-            control={control}
-            defaultValue="" // Default value for the Role field
-            rules={{ required: "Role is mandatory!!" }} // Validation rules
-            render={({ field, fieldState: { error } }) => (
-              <FormControl
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                error={!!error}
-                sx={{
-                  "& .MuiInputLabel-root": {
-                    color: theme
-                      ? darkTheme.textPrimary
-                      : lightTheme.textPrimary,
-                    "&.Mui-focused": {
-                      color: theme ? darkTheme.accent : lightTheme.accent,
-                    },
-                  },
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: theme ? darkTheme.border : lightTheme.border,
-                    },
-                    "&:hover fieldset": {
-                      borderColor: theme ? darkTheme.accent : lightTheme.accent,
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: theme ? darkTheme.accent : lightTheme.accent,
-                    },
-                  },
-                }}
-              >
-                <InputLabel id="select-role-label">Select Role</InputLabel>
-                <Select
-                  {...field}
-                  labelId="select-role-label"
-                  id="select-role"
-                  value={field.value || ""}
-                  onChange={(event: SelectChangeEvent<string>) =>
-                    field.onChange(event.target.value)
-                  }
-                  input={<OutlinedInput label="Select Role" />}
+            <Controller
+              name="Password"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Password is Required!!" }}
+              render={({ field }) => (
+                <FormControl
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  error={!!errors.Password}
                   sx={{
                     input: {
+                      color: theme
+                        ? darkTheme.textPrimary
+                        : lightTheme.textPrimary,
+                    },
+                    label: {
                       color: theme
                         ? darkTheme.textPrimary
                         : lightTheme.textPrimary,
@@ -343,37 +226,168 @@ function Login() {
                     },
                   }}
                 >
-                  {names.map((name) => (
-                    <MenuItem
-                      key={name}
-                      value={name}
-                      style={getStyles(name, personName, themme)}
-                    >
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {error && (
-                  <span style={{ color: "red", fontSize: "12px" }}>
-                    {error.message}
-                  </span>
-                )}
-              </FormControl>
-            )}
-          />
+                  <InputLabel htmlFor="outlined-adornment-password">
+                    Password
+                  </InputLabel>
+                  <OutlinedInput
+                    {...field}
+                    id="outlined-adornment-password"
+                    type={showPassword ? "text" : "password"}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label={
+                            showPassword ? "Hide password" : "Show password"
+                          }
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          onMouseUp={handleMouseUpPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    error={!!errors.Password}
+                    sx={{
+                      input: {
+                        color: theme
+                          ? darkTheme.textPrimary
+                          : lightTheme.textPrimary,
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: theme
+                            ? darkTheme.border
+                            : lightTheme.border,
+                        },
+                        "&:hover fieldset": {
+                          borderColor: theme
+                            ? darkTheme.accent
+                            : lightTheme.accent,
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: theme
+                            ? darkTheme.accent
+                            : lightTheme.accent,
+                        },
+                      },
+                    }}
+                  />
+                  {errors.Password && (
+                    <span style={{ color: "red", fontSize: "12px" }}>
+                      {errors.Password.message}
+                    </span>
+                  )}
+                </FormControl>
+              )}
+            />
 
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            style={{ marginTop: "16px" }}
-          >
-            Submit
-          </Button>
-        </div>
-      </form>
-    </Wrapper>
+            <Controller
+              name="Role"
+              control={control}
+              defaultValue="" // Default value for the Role field
+              rules={{ required: "Role is mandatory!!" }} // Validation rules
+              render={({ field, fieldState: { error } }) => (
+                <FormControl
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  error={!!error}
+                  sx={{
+                    "& .MuiInputLabel-root": {
+                      color: theme
+                        ? darkTheme.textPrimary
+                        : lightTheme.textPrimary,
+                      "&.Mui-focused": {
+                        color: theme ? darkTheme.accent : lightTheme.accent,
+                      },
+                    },
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: theme
+                          ? darkTheme.border
+                          : lightTheme.border,
+                      },
+                      "&:hover fieldset": {
+                        borderColor: theme
+                          ? darkTheme.accent
+                          : lightTheme.accent,
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: theme
+                          ? darkTheme.accent
+                          : lightTheme.accent,
+                      },
+                    },
+                  }}
+                >
+                  <InputLabel id="select-role-label">Select Role</InputLabel>
+                  <Select
+                    {...field}
+                    labelId="select-role-label"
+                    id="select-role"
+                    value={field.value || ""}
+                    onChange={(event: SelectChangeEvent<string>) =>
+                      field.onChange(event.target.value)
+                    }
+                    input={<OutlinedInput label="Select Role" />}
+                    sx={{
+                      input: {
+                        color: theme
+                          ? darkTheme.textPrimary
+                          : lightTheme.textPrimary,
+                      },
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          borderColor: theme
+                            ? darkTheme.border
+                            : lightTheme.border,
+                        },
+                        "&:hover fieldset": {
+                          borderColor: theme
+                            ? darkTheme.accent
+                            : lightTheme.accent,
+                        },
+                        "&.Mui-focused fieldset": {
+                          borderColor: theme
+                            ? darkTheme.accent
+                            : lightTheme.accent,
+                        },
+                      },
+                    }}
+                  >
+                    {names.map((name) => (
+                      <MenuItem
+                        key={name}
+                        value={name}
+                        style={getStyles(name, personName, themme)}
+                      >
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {error && (
+                    <span style={{ color: "red", fontSize: "12px" }}>
+                      {error.message}
+                    </span>
+                  )}
+                </FormControl>
+              )}
+            />
+
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              style={{ marginTop: "16px" }}
+            >
+              Submit
+            </Button>
+          </div>
+        </form>
+      </Wrapper>
   );
 }
 

@@ -8,7 +8,6 @@ import { Provider } from "react-redux";
 
 const rootElement = document.getElementById("root");
 
-
 // Ensure rootElement is not null
 if (!rootElement) {
   throw new Error("Failed to find the root element");
@@ -17,13 +16,10 @@ if (!rootElement) {
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
-  
   <React.StrictMode>
-    
     <Provider store={store}>
         <App />
-      </Provider>
- 
+    </Provider>
   </React.StrictMode>
 );
 

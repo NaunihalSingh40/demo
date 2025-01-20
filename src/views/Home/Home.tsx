@@ -7,6 +7,7 @@ import {
   TableData,
 } from "../../styles/components/Home/Home";
 import { ProjectTable } from "views/Project";
+import { Navbar } from "components/Navbar/Navbar";
 
 export interface Data {
   id: number;
@@ -24,13 +25,13 @@ const fetchData = async (): Promise<Data[]> => {
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
-  return response.json(); 
+  return response.json();
 };
 
 export const Home = () => {
   const { data, isLoading, error } = useQuery<Data[], Error>({
-    queryKey: ["users"], 
-    queryFn: fetchData,  
+    queryKey: ["users"],
+    queryFn: fetchData,
   });
 
   if (isLoading) {
@@ -42,27 +43,32 @@ export const Home = () => {
   }
 
   return (
-    <><Table>
+    <Navbar>
+      <>
+        <Table>
           <TableHead>
-              <TableRow>
-                  <TableHeader>ID</TableHeader>
-                  <TableHeader>Name</TableHeader>
-                  <TableHeader>Email</TableHeader>
-                  <TableHeader>City</TableHeader>
-                  <TableHeader>Zipcode</TableHeader>
-              </TableRow>
+            <TableRow>
+              <TableHeader>ID</TableHeader>
+              <TableHeader>Name</TableHeader>
+              <TableHeader>Email</TableHeader>
+              <TableHeader>City</TableHeader>
+              <TableHeader>Zipcode</TableHeader>
+            </TableRow>
           </TableHead>
           <tbody>
-              {data?.map((item) => (
-                  <TableRow key={item.id}>
-                      <TableData>{item.id}</TableData>
-                      <TableData>{item.name}</TableData>
-                      <TableData>{item.email}</TableData>
-                      <TableData>{item.address.city}</TableData>
-                      <TableData>{item.address.zipcode}</TableData>
-                  </TableRow>
-              ))}
+            {data?.map((item) => (
+              <TableRow key={item.id}>
+                <TableData>{item.id}</TableData>
+                <TableData>{item.name}</TableData>
+                <TableData>{item.email}</TableData>
+                <TableData>{item.address.city}</TableData>
+                <TableData>{item.address.zipcode}</TableData>
+              </TableRow>
+            ))}
           </tbody>
-      </Table><ProjectTable /></>
+        </Table>
+        <ProjectTable />
+      </>
+    </Navbar>
   );
 };
