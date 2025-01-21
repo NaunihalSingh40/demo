@@ -12,9 +12,9 @@ import {
   Text,
   TextTop,
   TextBottom,
-} from "../../styles/components/About/About";
+} from "../../styles/components/About";
 import { useSelector } from "react-redux";
-import { Navbar } from "components/Navbar/Navbar";
+import { Navbar } from "components/Navbar";
 
 interface aboutProps {}
 

@@ -14,7 +14,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import * as React from "react";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { Wrapper } from "../styles/components/Login/Login";
+import { Wrapper } from "../styles/components/Login";
 import { darkTheme, lightTheme } from "../theme/color";
 import { useNavigate } from "react-router-dom";
 import { Theme, useTheme } from "@mui/material/styles";

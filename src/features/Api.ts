@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Data } from "views/Home/Home";
+import { Data } from "views/Home";
 
 
 // interface loginCredentials{

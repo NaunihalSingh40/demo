@@ -8,13 +8,13 @@ import {
   NavItem,
   NavLink,
   NavToggle,
-} from "../../styles/components/Navbar/Navbar";
+} from "../../styles/components/Navbar";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { Box, FormGroup, Switch } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleMode } from "../../redux/modeSlice";
 import { ILayoutProps } from "./type";
-import { Clock } from "components/Clock/Clock";
+import { Clock } from "components/Clock";
 
 export const Navbar: React.FC<ILayoutProps> = ({ children }) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);

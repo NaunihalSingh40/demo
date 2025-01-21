@@ -2,12 +2,12 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Form from "./pages/Form";
 import Login from "./pages/Login";
-import { About } from "views/About/About";
-import { Home } from "views/Home/Home";
-import { HR } from "views/HR/HR";
-import { Financer } from "views/Financer/Financer";
-import { ProductManager } from "views/ProductManager/ProductManager";
-import { Admin } from "views/Admin/Admin";
+import { About } from "views/About";
+import { Home } from "views/Home";
+import { HR } from "views/HR";
+import { Financer } from "views/Financer";
+import { ProductManager } from "views/ProductManager";
+import { Admin } from "views/Admin";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 function App() {

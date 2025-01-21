@@ -13,7 +13,7 @@ import Rating from "@mui/material/Rating";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import { Navbar } from "components/Navbar/Navbar";
+import { Navbar } from "components/Navbar";
 
 // Define the interface for the form data
 interface IFormInputs {
