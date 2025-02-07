@@ -6,9 +6,8 @@ import {
   TableHeader,
   TableData,
 } from "../../styles/components/Home";
-import { ProjectTable } from "views/Project";
 import { Navbar } from "components/Navbar";
-import { ChatApp } from "components/ChatApp";
+import BreadcrumbComponent from "components/BreadCrumbs";
 
 export interface Data {
   id: number;
@@ -45,9 +44,9 @@ export const Home = () => {
 
   return (
     <>
-      <ChatApp />
       <Navbar>
         <>
+        <BreadcrumbComponent title="Home" />
           <Table>
             <TableHead>
               <TableRow>
@@ -70,7 +69,6 @@ export const Home = () => {
               ))}
             </tbody>
           </Table>
-          <ProjectTable />
         </>
       </Navbar>
     </>

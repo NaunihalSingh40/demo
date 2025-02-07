@@ -129,17 +129,16 @@ export const showBottomText = keyframes`
   export const AnimatedTitle = styled.div`
   color: #222;
   font-family: 'Roboto', Arial, sans-serif;
-  height: 20vmin; /* Smaller height */
-  width: 20vmin;  /* Smaller width */
+  height: 20vmin; 
+  width: 20vmin; 
   position: relative;
-  transform: none; /* Removes unnecessary translation */
+  transform: none; 
   margin-right: 20px;
 
   @media (max-width: 768px) {
-    margin-bottom: 20px; /* Adds spacing for mobile */
+    margin-bottom: 20px; 
   }
 `;
-
 export const TextWrapper = styled.div`
   height: 50%;
   overflow: hidden;
@@ -159,7 +158,7 @@ export const TextTop = styled(TextWrapper)<WrapperProps>`
     transform: translate(0, 100%);
 
     span:first-child {
-      color: ${(props) => props.isDarkMode ? darkTheme.textPrimary : lightTheme.textPrimary };
+      color: ${darkTheme.textPrimary};
     }
   }
 `;
