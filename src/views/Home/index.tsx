@@ -1,13 +1,14 @@
-import { useQuery } from "react-query";
+import { useQuery } from 'react-query';
 import {
   Table,
   TableHead,
   TableRow,
   TableHeader,
   TableData,
-} from "../../styles/components/Home";
-import { Navbar } from "components/Navbar";
-import BreadcrumbComponent from "components/BreadCrumbs";
+} from '../../styles/components/Home';
+import { Navbar } from 'components/Navbar';
+import BreadcrumbComponent from 'components/BreadCrumbs';
+import CustomButton from 'components/customButton';
 
 export interface Data {
   id: number;
@@ -21,16 +22,16 @@ export interface Data {
 
 // Fetch function
 const fetchData = async (): Promise<Data[]> => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/users");
+  const response = await fetch('https://jsonplaceholder.typicode.com/users');
   if (!response.ok) {
-    throw new Error("Network response was not ok");
+    throw new Error('Network response was not ok');
   }
   return response.json();
 };
 
 export const Home = () => {
   const { data, isLoading, error } = useQuery<Data[], Error>({
-    queryKey: ["users"],
+    queryKey: ['users'],
     queryFn: fetchData,
   });
 
@@ -46,7 +47,12 @@ export const Home = () => {
     <>
       <Navbar>
         <>
-        <BreadcrumbComponent title="Home" />
+          <CustomButton
+            variant='contained2'
+            sx={{ marginTop: 1, marginBottom: 2 }}
+            label='label'
+          />
+          <BreadcrumbComponent title='Home' />
           <Table>
             <TableHead>
               <TableRow>
